@@ -53,6 +53,16 @@ namespace HandsDetection
                         // Ajout de la bounding box et du contour aux listes
                         boundingBoxes.Add(rect);
                         contoursList.Add(contours);
+
+                        // TODO: find biggest contour here and compute all hull etc here
+                        try
+                        {
+                            Seq<Point> hull = contours.GetConvexHull(Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
+                        }
+                        catch (Exception ex)
+                        {
+                            //return;
+                        }
                     }
                 }
             }
