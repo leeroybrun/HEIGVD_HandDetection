@@ -30,8 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.ImageBoxOrig = new Emgu.CV.UI.ImageBox();
+            this.ImageBoxSkin = new Emgu.CV.UI.ImageBox();
             this.ImageBoxProc = new Emgu.CV.UI.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBoxOrig)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBoxSkin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBoxProc)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,25 +45,35 @@
             this.ImageBoxOrig.TabIndex = 2;
             this.ImageBoxOrig.TabStop = false;
             // 
+            // ImageBoxSkin
+            // 
+            this.ImageBoxSkin.Location = new System.Drawing.Point(451, 12);
+            this.ImageBoxSkin.Name = "ImageBoxSkin";
+            this.ImageBoxSkin.Size = new System.Drawing.Size(421, 358);
+            this.ImageBoxSkin.TabIndex = 3;
+            this.ImageBoxSkin.TabStop = false;
+            // 
             // ImageBoxProc
             // 
-            this.ImageBoxProc.Location = new System.Drawing.Point(451, 12);
+            this.ImageBoxProc.Location = new System.Drawing.Point(12, 388);
             this.ImageBoxProc.Name = "ImageBoxProc";
             this.ImageBoxProc.Size = new System.Drawing.Size(421, 358);
-            this.ImageBoxProc.TabIndex = 3;
+            this.ImageBoxProc.TabIndex = 4;
             this.ImageBoxProc.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 401);
+            this.ClientSize = new System.Drawing.Size(894, 769);
             this.Controls.Add(this.ImageBoxProc);
+            this.Controls.Add(this.ImageBoxSkin);
             this.Controls.Add(this.ImageBoxOrig);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ImageBoxOrig)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBoxSkin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBoxProc)).EndInit();
             this.ResumeLayout(false);
 
@@ -70,6 +82,7 @@
         #endregion
 
         private Emgu.CV.UI.ImageBox ImageBoxOrig;
+        private Emgu.CV.UI.ImageBox ImageBoxSkin;
         private Emgu.CV.UI.ImageBox ImageBoxProc;
     }
 }

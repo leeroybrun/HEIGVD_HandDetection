@@ -75,5 +75,24 @@ namespace HandsDetection
 
             return contours.First<Contour<Point>>();
         }
+
+        public void ExtractHull(Image<Bgr, Byte> img, Contour<Point> contour)
+        {
+            try
+            {
+                Seq<Point> hull = contour.GetConvexHull(Emgu.CV.CvEnum.ORIENTATION.CV_CLOCKWISE);
+                /*MCvBox2D box = contour.GetMinAreaRect();
+                PointF[] points = box.GetVertices();
+
+                Point[] ps = new Point[points.Length];
+                for (int i = 0; i < points.Length; i++)
+                    ps[i] = new Point((int)points[i].X, (int)points[i].Y);
+
+                img.DrawPolyline(hull.ToArray(), true, new Bgr(200, 125, 75), 2);
+                img.Draw(new CircleF(new PointF(box.center.X, box.center.Y), 3), new Bgr(200, 125, 75), 2);*/
+            } catch(Exception ex) {
+                return;
+            }
+        }
     }
 }
