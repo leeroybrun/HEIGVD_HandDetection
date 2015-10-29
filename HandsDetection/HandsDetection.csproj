@@ -109,6 +109,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\hand1.png" />
+    <Content Include="img\hand2.png" />
     <Content Include="img\IMG_2358.JPG" />
     <Content Include="img\IMG_2377.JPG" />
     <Content Include="img\IMG_2378.JPG" />

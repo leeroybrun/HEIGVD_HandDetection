@@ -25,36 +25,50 @@ namespace HandsDetection
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> imgOrg;
+            /*Image<Bgr, Byte> imgOrg;
 
             try
             {
-                imgOrg = new Image<Bgr, Byte>("D:\\dev\\HandsDetection\\HandsDetection\\img\\IMG_2383.JPG");
+                imgOrg = new Image<Bgr, Byte>("..\\..\\img\\hand2.png");
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 return;
             }
 
             if (imgOrg == null)
             {
+                MessageBox.Show("L'image n'a pas pu être chargée");
                 return;
-            }
+            }*/
 
-            detection = new HandDetection(imgOrg);
+            Capture capture = new Capture();
 
-            detection.FindSkinContours();
+            Application.Idle += new EventHandler(delegate (object se, EventArgs ev)
+            {
+                Image<Bgr, Byte> imgOrg = capture.QueryFrame();
 
-            detection.DrawSkinContour();
-            detection.DrawSkinBoundingBox();
+                detection = new HandDetection(imgOrg);
 
-            detection.ExtractHull();
+                detection.FindSkinContours();
 
-            detection.DrawAndComputeFingers();
+                if(detection.IsHandDetected())
+                {
+                    detection.DrawSkinContour();
+                    detection.DrawSkinBoundingBox();
 
-            ImageBoxOrig.Image = detection.GetImgOrg().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-            ImageBoxSkin.Image = detection.GetImgSkin().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-            ImageBoxProc.Image = detection.GetImgProc().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                    detection.ExtractHull();
+
+                    detection.DrawAndComputeFingers();
+                }
+
+                ImageBoxOrig.Image = detection.GetImgOrg().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                ImageBoxSkin.Image = detection.GetImgSkin().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                ImageBoxProc.Image = detection.GetImgProc().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+
+                NbFingersLabel.Text = detection.GetFingerNum().ToString();
+            });
         }
     }
 }

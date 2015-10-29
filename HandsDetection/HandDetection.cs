@@ -33,10 +33,19 @@ namespace HandsDetection
         Ellipse ellip;
         MemStorage hullStorage = new MemStorage();
 
+        int fingerNum = 0;
+
+        bool isHandDetected = false;
+
         public HandDetection(Image<Bgr, Byte> imgOrg)
         {
             this.imgOrg = imgOrg;
             this.imgProc = imgOrg.Copy();
+        }
+
+        public int GetFingerNum()
+        {
+            return fingerNum;
         }
 
         public Image<Bgr, Byte> GetImgOrg()
@@ -52,6 +61,11 @@ namespace HandsDetection
         public Image<Bgr, Byte> GetImgProc()
         {
             return imgProc.Copy();
+        }
+
+        public bool IsHandDetected()
+        {
+            return isHandDetected;
         }
 
         // Cherche les contours et bounding boxes de la peau sur une image fournie
@@ -116,8 +130,17 @@ namespace HandsDetection
             }
 
             // Pas très optimisé... devrait trouver le plus grand contour & bounding box lors de la boucle sur tous les contours
-            FindBiggestBoundingBox();
-            FindBiggestContour();
+            if(boundingBoxes.Count > 0)
+            {
+                FindBiggestBoundingBox();
+                FindBiggestContour();
+                isHandDetected = true;
+            }
+            else
+            {
+                isHandDetected = false;
+                fingerNum = 0;
+            }
         }
 
         public void DrawSkinContour()
@@ -180,7 +203,7 @@ namespace HandsDetection
 
         public void DrawAndComputeFingers()
         {
-            int fingerNum = 0;
+            fingerNum = 0;
 
             for (int i = 0; i < defects.Total; i++)
             {
@@ -217,7 +240,7 @@ namespace HandsDetection
                 //imgProc.Draw(endCircle, new Bgr(Color.DarkBlue), 4);
             }
 
-            MCvFont font = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_DUPLEX, 5d, 5d);
+            MCvFont font = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 5d, 5d);
             imgProc.Draw(fingerNum.ToString(), ref font, new Point(50, 150), new Bgr(Color.White));
         }
     }
