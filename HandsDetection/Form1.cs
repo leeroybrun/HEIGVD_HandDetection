@@ -29,7 +29,7 @@ namespace HandsDetection
 
             try
             {
-                imgOrg = new Image<Bgr, Byte>("D:\\dev\\HandsDetection\\HandsDetection\\img\\IMG_2358.JPG");
+                imgOrg = new Image<Bgr, Byte>("D:\\dev\\HandsDetection\\HandsDetection\\img\\IMG_2383.JPG");
             }
             catch (Exception ex)
             {
