@@ -16,7 +16,7 @@ namespace HandsDetection
 {
     public partial class Form1 : Form
     {
-        HandDetection detection = new HandDetection();
+        HandDetection detection = null;
 
         public Form1()
         {
@@ -41,24 +41,20 @@ namespace HandsDetection
                 return;
             }
 
-            List<Contour<Point>> contoursList = new List<Contour<Point>>();
-            List<Rectangle> boundingBoxes = new List<Rectangle>();
+            detection = new HandDetection(imgOrg);
 
-            Image<Gray, Byte> imgSkin = detection.FindSkinContours(imgOrg, contoursList, boundingBoxes);
-            Image<Bgr, Byte> imgProc = imgOrg.Copy();
+            detection.FindSkinContours();
 
-            Rectangle biggestBoundingBox = detection.FindBiggestBoundingBox(boundingBoxes);
-            Contour<Point> biggestContour = detection.FindBiggestContour(contoursList);
+            detection.DrawSkinContour();
+            detection.DrawSkinBoundingBox();
 
-            CvInvoke.cvDrawContours(imgOrg, biggestContour, new Bgr(Color.Transparent).MCvScalar, new Bgr(Color.LimeGreen).MCvScalar, 2, 0, Emgu.CV.CvEnum.LINE_TYPE.CV_AA, new Point(0, 0));
+            detection.ExtractHull();
 
-            imgOrg.Draw(biggestBoundingBox, new Bgr(Color.Red), 2);
+            detection.DrawAndComputeFingers();
 
-            detection.ExtractHull(imgProc, biggestContour);
-
-            ImageBoxOrig.Image = imgOrg.Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-            ImageBoxSkin.Image = imgSkin.Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-            //ImageBoxProc.Image = imgProc.Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            ImageBoxOrig.Image = detection.GetImgOrg().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            ImageBoxSkin.Image = detection.GetImgSkin().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            ImageBoxProc.Image = detection.GetImgProc().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
         }
     }
 }
