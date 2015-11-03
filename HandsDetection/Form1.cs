@@ -25,48 +25,41 @@ namespace HandsDetection
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            /*Image<Bgr, Byte> imgOrg;
-
-            try
-            {
-                imgOrg = new Image<Bgr, Byte>("..\\..\\img\\hand2.png");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            if (imgOrg == null)
-            {
-                MessageBox.Show("L'image n'a pas pu être chargée");
-                return;
-            }*/
-
+            // Crée une nouvelle capture de la webcam
             Capture capture = new Capture();
 
+            // Pendant que l'application est au "repos", on va traiter les images reçues de la webcam
             Application.Idle += new EventHandler(delegate (object se, EventArgs ev)
             {
+                // Récupère une image
                 Image<Bgr, Byte> imgOrg = capture.QueryFrame();
 
+                // Crée nouvel objet HandDetection avec l'image fournie
                 detection = new HandDetection(imgOrg);
 
+                // Détecte et sépare la peau du reste de l'image + trouve le contour qui correspond à la peau
                 detection.FindSkinContours();
 
+                // Si une main est détectée
                 if(detection.IsHandDetected())
                 {
+                    // Dessine le contour de la peau et la bounding box sur l'image originale
                     detection.DrawSkinContour();
                     detection.DrawSkinBoundingBox();
 
+                    // Extrait la "coque" et les verticles qui permettent de calculer le nombre de doigts
                     detection.ExtractHull();
 
+                    // Calcule et dessine le nombre de doigts détectés
                     detection.DrawAndComputeFingers();
                 }
 
+                // Récupère les différentes images et les affiche (en les redimenssionnant pour qu'elles s'affichent en entier dans les ImageBox)
                 ImageBoxOrig.Image = detection.GetImgOrg().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
                 ImageBoxSkin.Image = detection.GetImgSkin().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
                 ImageBoxProc.Image = detection.GetImgProc().Resize(0.5, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
 
+                // Affiche le nombre de doigts détectés
                 NbFingersLabel.Text = detection.GetFingerNum().ToString();
             });
         }

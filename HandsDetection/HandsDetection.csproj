@@ -109,16 +109,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="img\hand1.png" />
-    <Content Include="img\hand2.png" />
-    <Content Include="img\IMG_2358.JPG" />
-    <Content Include="img\IMG_2377.JPG" />
-    <Content Include="img\IMG_2378.JPG" />
-    <Content Include="img\IMG_2379.JPG" />
-    <Content Include="img\IMG_2380.JPG" />
-    <Content Include="img\IMG_2381.JPG" />
-    <Content Include="img\IMG_2382.JPG" />
-    <Content Include="img\IMG_2383.JPG" />
     <Content Include="opencv_calib3d2410.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
